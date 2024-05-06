@@ -1,41 +1,23 @@
-// - 8 : 25
+// 9 : 20
 class Solution {
     public boolean isSubsequence(String s, String t) {
-        // s를 배열로 바꾼 후 한 글자씩 순회하면서 t가 가지고 있는지 확인하기
-        boolean answer = true;
+        char[] c=s.toCharArray();
+        int prev=-1;
 
-        char[] sArray=s.toCharArray();
-
-        int prevIndex=-1;
-        for(int i=0;i<sArray.length;i++){
-            int currentIndex=t.indexOf(sArray[i]);
-
-            if(t.indexOf(sArray[i])!=-1){
-                if(currentIndex>prevIndex){
-                    prevIndex=currentIndex;
-                    continue;
+        for(int i=0;i<c.length;i++){
+            int temp=t.indexOf(c[i]);
+            while(temp!=-1){
+                if(prev<temp){
+                    prev=temp;
+                    break;
                 }else{
-                    while(true){
-                        currentIndex=t.indexOf(sArray[i],currentIndex+1);
-                        if(currentIndex==-1) {
-                             answer=false; 
-                            break;
-                        }
-                        else if(currentIndex>prevIndex){
-                            prevIndex=currentIndex;
-                            break;
-                    }
-                    }
-                    if( !answer ) break;
-
+                    temp=t.indexOf(c[i],temp+1);
                 }
             }
-            else {
-                answer=false; 
-                break;
-            }
-        } 
 
-        return answer;
+            if(temp==-1) return false;
+        }
+
+        return true;
     }
 }
